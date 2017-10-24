@@ -16,30 +16,13 @@ public:
 	using size_type = typename container_type::size_type;
 
 public:
-	explicit stack(const container_type& cont) : m_container(cont)
-	{}
 
-	explicit stack(container_type&& cont = container_type()) : m_container(std::move(cont))
+	template <typename ... Arguments>
+	explicit stack(Arguments&&... args) : m_container(std::forward<Arguments...>(args...))
 	{}
 
 	stack(const stack& other) = default;
 	stack(stack&& other) = default;
-
-	template <typename Alloc>
-	explicit stack(const Alloc& alloc) : m_container(alloc)
-	{}
-
-	template <typename Alloc>
-	stack(const container_type& cont, const Alloc& alloc) : m_container(cont, alloc)
-	{}
-
-	template <typename Alloc>
-	stack(const stack& other, const Alloc& alloc) : m_container(other.m_container, alloc)
-	{}
-
-	template <typename Alloc>
-	stack(stack&& other, const Alloc& alloc) : m_container(std::move(other.m_container), alloc)
-	{}
 
 public:
 	reference top()
